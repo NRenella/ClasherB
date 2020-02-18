@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:clasherbeta/summoner.dart';
 
 Future<summoner> fetchSummoner() async{
-  final response = await http.get('https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/dianelovesramen?api_key=RGAPI-897c1c68-fe69-43c4-a435-d84180880211');
+  final response = await http.get('https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/dianelovesramen?api_key= REQUIRED API KEY HERE');
 
   if(response.statusCode == 200){
     return summoner.fromJson(json.decode(response.body));
