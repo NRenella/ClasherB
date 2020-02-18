@@ -4,9 +4,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:clasherbeta/summoner.dart';
+import 'package:clasherbeta/config.dart';
 
 Future<summoner> fetchSummoner() async{
-  final response = await http.get('https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/dianelovesramen?api_key=RGAPI-897c1c68-fe69-43c4-a435-d84180880211');
+  config key = new config();
+  final response = await http.get('https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/dianelovesramen?api_key=' + key.key);
 
   if(response.statusCode == 200){
     return summoner.fromJson(json.decode(response.body));
