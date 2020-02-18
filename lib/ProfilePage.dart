@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:clasherbeta/summoner.dart';
+
+Future<summoner> fetchSummoner() async{
+  final response = await http.get('https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/dianelovesramen?api_key=RGAPI-897c1c68-fe69-43c4-a435-d84180880211');
+
+  if(response.statusCode == 200){
+    return summoner.fromJson(json.decode(response.body));
+  } else{
+    throw Exception('Failed to load Summoner');
+  }
+}
+
+Future<summoner> sum;
+
+void main() => runApp(ProfilePage());
+
+class ProfilePage extends StatefulWidget{
+  ProfilePage({Key key}) : super(key: key);
+  @override
+  _ProfilePageState createState() => new _ProfilePageState();
+
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    sum = fetchSummoner();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Fetch Data Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        body: Center(
+          child: FutureBuilder<summoner>(
+            future: sum,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                    child:Text("profile page PLEASe")
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              // By default, show a loading spinner.
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
+      ),
+    );
+
+  }
+}
