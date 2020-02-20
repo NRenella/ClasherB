@@ -43,20 +43,71 @@ class _TeamPageState extends State<TeamPage> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: Center(
-          child: FutureBuilder<summoner>(
-            future: sum,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                    child:Text("TEAM PLEASe")
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/bg-default.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 40,),
+
+                  FutureBuilder<summoner>(
+                    future: sum,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: <Widget>[
+
+                            Container(
+                            alignment: Alignment.centerRight,
+                              height: 150,
+
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('assets/logos/RaptorLogo.png'),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 30,),
+
+                            Container(
+                              height: 75,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                              ),
+                              margin: EdgeInsets.all(15.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    margin: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      "Players",
+                                      style: TextStyle(
+                                        fontFamily: 'Helvetica',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ),
+                            ),
+                          ]
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      // By default, show a loading spinner.
+                      return CircularProgressIndicator();
+                  },
+                ),
+            ]
           ),
         ),
       ),
